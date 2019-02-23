@@ -1,7 +1,13 @@
 <template>
-  <v-app light id="app">
+  <v-app
+    light
+    id="app"
+  >
     <v-content>
-      <v-container fluid id="app-container">
+      <v-container
+        fluid
+        id="app-container"
+      >
         <router-view
           :is-d-app-ready="isDAppReady"
           :current-view="currentView"
@@ -11,10 +17,6 @@
         />
       </v-container>
     </v-content>
-    <v-footer class="pa-3" color="grey darken-3" app>
-      <v-spacer />
-      <span class="red--text">&copy; {{ (new Date()).getFullYear() }}</span>
-    </v-footer>
   </v-app>
 </template>
 
@@ -46,5 +48,4 @@ export default {
     }
   }
 }
-
 </script>

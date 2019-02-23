@@ -7,7 +7,13 @@
     <BodyTemplate
       :current-view="currentView"
     />
-    <FooterTemplate />
+    <v-footer
+      class="pa-3"
+      color="grey darken-3"
+      app>
+      <v-spacer />
+      <span class="red--text">&copy; {{ (new Date()).getFullYear() }}</span>
+    </v-footer>
   </div>
 </template>
 
@@ -16,8 +22,7 @@ export default {
   name: 'Dashboard',
   components: {
     HeaderTemplate,
-    BodyTemplate,
-    FooterTemplate
+    BodyTemplate
   },
   props: {
     currentView: {
@@ -49,6 +54,5 @@ export default {
 import { mapActions } from 'vuex'
 import HeaderTemplate from './layout/HeaderTemplate'
 import BodyTemplate from './layout/BodyTemplate'
-import FooterTemplate from './layout/FooterTemplate'
 import { ACTION_TYPES } from '../util/constants'
 </script>

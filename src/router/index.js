@@ -4,9 +4,10 @@ import Home from '@/components/Home'
 import Dashboard from '@/components/Dashboard'
 import Profile from '@/components/sections/Profile.vue'
 import ProfileForm from '@/components/sections/ProfileForm.vue'
+import SaveFile from '@/components/sections/SaveFile.vue'
 import Web3Message from '@/components/sections/Web3Message.vue'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
@@ -44,6 +45,13 @@ export default new Router({
       name: 'ProfileEdit',
       component: Dashboard,
       meta: { view: ProfileForm }
-    }
+    },
+    {
+      mode: 'history',
+      path: '/push',
+      name: 'PushFile',
+      component: Home,
+      meta: { view: SaveFile }
+    },
   ]
 })

@@ -1,86 +1,116 @@
 <template>
-  <div
-    id="header-template"
-    class="sticky header"
-  >
-    <div class="content">
-      <router-link
-        to="/"
-        class="logo"
-      >
-        INSERT YOUR LOGO HERE
-      </router-link>
-      <div class="links">
-        <router-link
-          v-if="!user.isLoggedIn"
-          to="/sign-up"
-          class="link1"
-        >
-          Sign Up
-        </router-link> <span
-          v-if="!user.isLoggedIn"
-          class="divider"
+  <div id="navigation">
+    <v-toolbar class="navigation-toolbar" color="transparent">
+      <div class="navigation-title">
+        <v-toolbar-side-icon
+          :class="theme.fg"
+          @click.stop="drawer = !drawer"
         />
-        <input
-          v-if="!user.isLoggedIn"
-          type="button"
-          class="link1"
-          value="Login"
-          @click="logUserIn"
-        > <span
-          v-if="!user.isLoggedIn"
-          class="divider"
-        />
-        <router-link
-          v-if="user.isLoggedIn"
-          to="/profile/edit"
-          class="link2"
-        >
-          Edit Profile
-        </router-link> <span
-          v-if="user.isLoggedIn"
-          class="divider"
-        />
-        <input
-          v-if="user.isLoggedIn"
-          type="button"
-          class="link2"
-          value="Logout"
-          @click="logUserOut"
-        > <span
-          v-if="user.isLoggedIn"
-          class="divider"
-        />
-        <a
-          href="https://github.com/DOkwufulueze/eth-vue"
-          target="_blank"
-          class="link3"
-        >Github</a> <span class="divider" />
-        <a
-          href="http://danielokwufulueze.com"
-          target="_blank"
-          class="link4"
-        >www</a>
+        <v-toolbar-title>
+          <router-link
+            title="Home"
+            :class="theme.fg"
+            to="/"
+          >
+            Artwork Manager
+          </router-link>
+        </v-toolbar-title>
       </div>
-    </div>
+
+    </v-toolbar>
+
+    <v-navigation-drawer
+      v-model="drawer"
+      fixed
+      app
+    >
+      <v-list>
+        <v-list-tile avatar>
+          <v-list-tile-avatar :tile="tile">
+            <v-gravatar :email="user.email" />
+          </v-list-tile-avatar>
+          <v-list-tile-content>
+            <v-list-tile-sub-title class="email-info">{{ user.email }}</v-list-tile-sub-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+
+      <v-divider/>
+
+      <v-list>
+        <menu-link
+          key="0"
+          title="Home"
+          link="/"
+          icon="home"
+          :theme="theme"
+        />
+        <menu-link
+          v-if="!user.isLoggedIn"
+          key="1"
+          title="Sign Up"
+          @click="logUserIn"
+          link="/sign-up"
+          icon="settings"
+          :theme="theme"
+        />
+        <menu-link
+          key="3"
+          title="Save File"
+          link="/push"
+          icon="exit_to_app"
+          :theme="theme"
+        />
+        <menu-link
+          v-if="!user.isLoggedIn"
+          key="2" title="Edit Profile"
+          link="/profile/edit"
+          icon="settings"
+          :theme="theme"
+        />
+        <menu-link
+          v-if="user.isLoggedIn"
+           key="3"
+           title="Log out"
+           link="/logout"
+           @click="logUserOut"
+           icon="exit_to_app"
+           :theme="theme"
+        />
+      </v-list>
+    </v-navigation-drawer>
   </div>
 </template>
 
-<script type="text/javascript">
+<script>
+import MenuLink from "../../components/layout/MenuLink.vue";
+
 export default {
   name: 'HeaderTemplate',
+  components: {
+    "menu-link": MenuLink
+  },
   data: function () {
     return {
-      user: this.$store.state.user
+      theme: {
+        bg: "red",
+        fg: "red--text"
+      },
+      drawer:    null,
+      tile:      false,
+      menu:      false,
+      user:      this.$store.state.user,
+      userName:  "",
+      userEmail: ""
     }
   },
   methods: {
     logUserIn (evt = null) {
-      if (evt) evt.target.disabled = true
+      if (evt) evt.target.disabled = true;
       this.$emit('log-user-in', evt)
     },
     logUserOut (evt = null) {
-      if (evt) evt.target.disabled = true
+      if (evt) evt.target.disabled = true;
       this.$emit('log-user-out', evt)
     }
   }

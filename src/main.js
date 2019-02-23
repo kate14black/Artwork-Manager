@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import App from './components/App.vue';
+import Vuetify from 'vuetify';
 import router from './router';
 import store from './store';
+import Gravatar from "vue-gravatar";
 
 import { mapState, mapActions } from 'vuex';
 import { ACTION_TYPES } from './util/constants';
@@ -15,6 +17,28 @@ require("vuetify/dist/vuetify.min.css");
 
 /* eslint-disable no-new */
 
+Vue.component("v-gravatar", Gravatar);
+Vue.use(Vuetify, {
+  theme: {
+    primary:   "red",
+    secondary: "red--text"
+  },
+
+});
+
+Vue.mixin({
+  data: function() {
+    return {
+      get Utils() {
+        return {
+          web3: new Web3(window.web3.currentProvider),
+          contracts: {}
+        }
+      }
+    }
+  }
+});
+
 new Vue({
   el: '#app',
   router,
@@ -24,7 +48,7 @@ new Vue({
     return {
       managers: {
         UserManager
-      }
+      },
     }
   },
   computed: {
@@ -114,9 +138,6 @@ new Vue({
       ACTION_TYPES.SET_CURRENT_VIEW,
       ACTION_TYPES.LOGIN
     ]),
-    callUpdateUserGravatar (payload = null) {
-      this[ACTION_TYPES.UPDATE_USER_GRAVATAR](payload)
-    },
     callToWriteUser (payload = null) {
       const actionParams = Object.assign({}, payload.requestParams, {
         methodName: payload.methodName,

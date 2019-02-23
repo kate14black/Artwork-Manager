@@ -26,8 +26,7 @@ library userManager {
     address userId,
     string memory firstName,
     string memory lastName,
-    string memory email,
-    bytes32 gravatar
+    string memory email
   )
     internal
   {
@@ -47,7 +46,6 @@ library userManager {
     DB(dbAddress).setStringValue(keccak256(abi.encodePacked("user/first-name", userId)), firstName);
     DB(dbAddress).setStringValue(keccak256(abi.encodePacked("user/last-name", userId)), lastName);
     DB(dbAddress).setStringValue(keccak256(abi.encodePacked("user/email", userId)), email);
-    DB(dbAddress).setBytes32Value(keccak256(abi.encodePacked("user/gravatar", userId)), gravatar);
   }
 
   function checkUserAndInitIfNecessary (

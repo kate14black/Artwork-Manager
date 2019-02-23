@@ -7,7 +7,16 @@
     <BodyTemplate
       :current-view="currentView"
     />
-    <FooterTemplate />
+    <v-footer
+      class="pa-3"
+      color="grey darken-3"
+      app>
+      <v-spacer />
+      <span
+        class="red--text">
+        &copy; {{ (new Date()).getFullYear() }}
+      </span>
+    </v-footer>
   </div>
 </template>
 
@@ -16,8 +25,7 @@ export default {
   name: 'Home',
   components: {
     HeaderTemplate,
-    BodyTemplate,
-    FooterTemplate
+    BodyTemplate
   },
   props: {
     currentView: {
@@ -37,7 +45,6 @@ export default {
 
 import HeaderTemplate from './layout/HeaderTemplate'
 import BodyTemplate from './layout/BodyTemplate'
-import FooterTemplate from './layout/FooterTemplate'
 </script>
 
 

@@ -1,63 +1,24 @@
 <template>
   <div id="web3-message">
-    <div class="content">
-      <div class="message">
-        <div v-if="user.hasWeb3InjectedBrowser">
-          Your browser is Web3-injected.
-          <br>
-          <div v-if="user.isConnectedToApprovedNetwork">
-            You are also connected to the {{ approvedNetworkName }} on the blockchain.
-            <br>
-            <div v-if="user.hasCoinbase">
-              <span v-if="user.isLoggedIn">
-                Welcome {{ user.firstName }}
-              </span>
-              <span v-else>
-                And we can see your ethereum address [{{ coinbase }}].<br>
-                You're all set to use the dApp. If you're not signed up, click the "Sign Up" link above to begin, or click the LOGIN button above to login.
-              </span>
-            </div>
-            <div v-else>
-              But it seems you don't have an account with us on the blockchain.<br>Or you do but the account is currently inaccessible.<br>Create an account on the blockchain and sign up to begin, or make your existing account accessible.
-            </div>
-          </div>
-          <div v-else>
-            But you are not connected to our network on the blockchain [{{ approvedNetworkName }}].<br>
-            Connect to the {{ approvedNetworkName }}.
-          </div>
-        </div>
-        <div v-else>
-          {{ user.warningMessage }} To use the eth-vue dApp, you can begin by installing a Web3 injector like <a href="https://metamask.io/">Metamask</a>.
-          <div
-            class="metamask-resource"
-            @click="goToMetamask"
-          ></div>
-        </div>
-      </div>
-    </div>
+    <p v-if="isInjected" id="has-metamask"><i aria-hidden="true" class="fa fa-check"></i> Metamask installed</p>
+    <p v-else id="no-metamask"><i aria-hidden="true" class="fa fa-times"></i> Metamask not found</p>
+    <p>Network: {{ network }}</p>
+    <p>Account: {{ coinbase }}</p>
+    <p>Balance: {{ balance }} Wei </p>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Web3Message',
-  data: function () {
-    return {
-      approvedNetworkName: NETWORKS[APPROVED_NETWORK_ID],
-      user: this.$store.state.user
-    }
-  },
-  computed: {
-    coinbase () {
-      return this.user.coinbase
-    }
-  },
-  methods: {
-    goToMetamask () {
-      window.location.href = 'https://metamask.io/'
-    }
-  }
+  computed: mapState({
+    isInjected: state => state.web3.isInjected,
+    network: state => NETWORKS[state.web3.networkId],
+    coinbase: state => state.web3.coinbase,
+    balance: state => state.web3.balance
+  })
 }
 
+import { mapState } from 'vuex'
 import { APPROVED_NETWORK_ID, NETWORKS } from '../../util/constants'
 </script>

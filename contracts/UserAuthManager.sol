@@ -22,13 +22,12 @@ contract UserAuthManager is Destructible {
   function setUser (
     string calldata firstName,
     string calldata lastName,
-    string calldata email,
-    bytes32 gravatar
+    string calldata email
   )
     external
     payable
   {
-    userManager.setUser(dbAddress, msg.sender, firstName, lastName, email, gravatar);
+    userManager.setUser(dbAddress, msg.sender, firstName, lastName, email);
     emit SetUser(msg.sender, true);
   }
 }

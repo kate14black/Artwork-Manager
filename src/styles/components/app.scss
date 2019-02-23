@@ -24,4 +24,12 @@ textarea {
   /*max-width: 960px;*/
   min-width: 1020px;
   margin: auto;
+  .container {
+    padding: 0 !important;
+  }
+  .footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+  }
 }
